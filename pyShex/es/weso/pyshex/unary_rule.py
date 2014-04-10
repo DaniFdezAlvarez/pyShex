@@ -12,5 +12,21 @@ class UnaryRule(ShRule):
         self._sh_label = sh_label
         self._sh_type = sh_type
 
+    def __eq__(self, other):
+        if not type(self) == type(other):
+            return False
+        if not self._sh_label == other._sh_label:
+            return False
+        if not self._sh_type == other._sh_type:
+            return False
+        return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+
+    def __hash__(self):
+        return hash(self._sh_label) ^ hash(self._sh_type)
+
 
 

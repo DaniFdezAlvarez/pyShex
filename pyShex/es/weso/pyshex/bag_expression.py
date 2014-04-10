@@ -10,3 +10,6 @@ class BagExpression(object):
             and_rule = AndRule()
         self._and_rule = and_rule
 
+
+
+

@@ -24,4 +24,8 @@ class ShRule(object):
         self._is_entering = is_entering
         self._is_negation = is_negation
 
-        pass
+
+
+
+
+

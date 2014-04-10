@@ -14,3 +14,24 @@ class OrRule(ShRule):
         if rules is None:
             rules = []
         self._rules = rules
+
+
+    def __eq__(self, other):
+        if not type(self) == type(other):
+            return False
+        if not len(self._rules) == len(other._rules):
+            return False
+        for i in range(0, len(self._rules)):
+            if not self._rules[i] == other._rules[i]:
+                return False
+        return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+
+    def __hash__(self):
+        result = 0
+        for rule in self._rules:
+            result ^= hash(rule)  # XOR_EQUAL SIGN... pretty freak =)
+        return result
