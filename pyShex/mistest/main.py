@@ -1,8 +1,8 @@
 __author__ = 'Dani'
 
-from es.weso.pyshex.and_rule import AndRule
-from es.weso.pyshex.or_rule import OrRule
-from es.weso.pyshex.bag.bag import Bag
+from esp.weso.pyshex.and_rule import AndRule
+from esp.weso.pyshex.or_rule import OrRule
+from esp.weso.pyshex.bag.bag import Bag
 
 
 
