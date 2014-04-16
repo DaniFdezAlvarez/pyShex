@@ -272,8 +272,73 @@ class TestBag(unittest.TestCase):
 
 
     def test_contained_in_bag(self):
-        #TODO
-        pass
+        a = Bag()
+        b = Bag()
+
+        #A different instance than a bag
+        other = Warning()
+        with self.assertRaises(NoBagReceivedException):
+            b.contains_bag(other)
+
+        #Empty bags
+        self.assertTrue(a.contained_in_bag(b))
+        self.assertTrue(b.contained_in_bag(a))
+
+        # a with one element (a, none)
+        a.add("a")
+        self.assertFalse(a.contained_in_bag(b))
+        self.assertTrue(b.contained_in_bag(a))
+
+        #both with the same element (a,a)
+        b.add("a")
+        self.assertTrue(a.contained_in_bag(b))
+        self.assertTrue(b.contained_in_bag(a))
+
+        #a with repeated elements. b not (aaa, a)
+        a.add("a")
+        a.add("a")
+        self.assertFalse(a.contained_in_bag(b))
+        self.assertTrue(b.contained_in_bag(a))
+
+        #both qith the same number of repeated elements
+        b.add("a")
+        b.add("a")
+        self.assertTrue(a.contained_in_bag(b))
+        self.assertTrue(b.contained_in_bag(a))
+
+        # a with a new element. b hasn't got it (aaab, aaa)
+        a.add("b")
+        self.assertFalse(a.contained_in_bag(b))
+        self.assertTrue(b.contained_in_bag(a))
+
+        #Bpth with the new element (aaab, aaab)
+        b.add("b")
+        self.assertTrue(a.contained_in_bag(b))
+        self.assertTrue(b.contained_in_bag(a))
+
+        #Adding elements in a different order (aaabccd, aaabdcc)
+        a.add("c")
+        a.add("c")
+        a.add("d")
+        b.add("d")
+        b.add("c")
+        b.add("c")
+        self.assertTrue(a.contained_in_bag(b))
+        self.assertTrue(b.contained_in_bag(a))
+
+        #Bags taht does not contain each other
+        a.add(1)
+        b.add(2)
+        self.assertFalse(a.contained_in_bag(b))
+        self.assertFalse(b.contained_in_bag(a))
+
+        #Simpler bags that does not contain each other
+        c = Bag("a")
+        d = Bag("b")
+        self.assertFalse(c.contained_in_bag(d))
+        self.assertFalse(d.contained_in_bag(c))
+
+
 
     def test_len(self):
         a = Bag()
@@ -323,6 +388,83 @@ class TestBag(unittest.TestCase):
 
 
     def test_eq(self):
-        #TODO
-        pass
+        a = Bag()
+        b = Bag()
+
+        #Empty bags
+        self.assertEquals(a, b)
+
+        #Empty bag vs bag one element
+        a.add("a")
+        self.assertNotEquals(a, b)
+
+        #Bags with same elements (a,a)
+        b.add("a")
+        self.assertEquals(a, b)
+
+        #(aaa, a) NO
+        a.add("a")
+        a.add("a")
+        self.assertNotEquals(a, b)
+
+        #(aaa, aaa) YES
+        b.add("a")
+        b.add("a")
+        self.assertEquals(a, b)
+
+        #(aaab,aaa) NOT
+        a.add("b")
+        self.assertNotEquals(a, b)
+
+        #(aaab, aaab) YES
+        b.add("b")
+        self.assertEquals(a, b)
+
+        #(aaabcd, aaabdc) different order of adiccion YES
+        a.add("c")
+        a.add("d")
+        b.add("d")
+        b.add("c")
+
+        self.assertEquals(a, b)
+
+        #Different nature (...1, ...1) YES
+        a.add(1)
+        b.add(1)
+        self.assertEquals(a, b)
+
+        #Different (...m, ...n) NO
+        a.add("n")
+        b.add("m")
+        self.assertNotEquals(a, b)
+
+        #Constructor vs add (a, a) YES
+        a = Bag("a")
+        b = Bag()
+        b.add("a")
+        self.assertEquals(a, b)
+
+        #Constructor vs add (aa, aa) YES
+        a = Bag("a", "a")
+        b = Bag()
+        b.add("a")
+        b.add("a")
+        self.assertEquals(a, b)
+
+        #Constructor vs add (aab, aab)
+        a = Bag("a", "a", "b")
+        b = Bag()
+        b.add("a")
+        b.add("a")
+        b.add("b")
+
+
+        #Constructor vs add different (aa, ab) NO
+
+        a = Bag("a", "a")
+        b = Bag()
+        b.add("a")
+        b.add("b")
+        self.assertNotEquals(a, b)
+
 
