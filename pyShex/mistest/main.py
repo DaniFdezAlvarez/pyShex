@@ -37,7 +37,17 @@ def approach_to_bags():
 
     print h
 
-substringing()
+
+def approach_to_sets():
+    a = set()
+    a.add("a")
+    print len(a)
+    a.add("a")
+    print len(a)
+
+
+# substringing()
+approach_to_sets()
 
 
 
