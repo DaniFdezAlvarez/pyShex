@@ -51,6 +51,8 @@ class TestBag(unittest.TestCase):
         self.assert_(str(e).__contains__("a"))
         self.assert_(str(e).__contains__("b"))
 
+        print "passed!"
+
 
     def test_add(self):
         a = Bag()
@@ -77,6 +79,8 @@ class TestBag(unittest.TestCase):
         a.add(1)
         self.assertEquals(7, len(a))
         self.assertEquals(a.times(1), 1)
+
+        print "passed!"
 
 
     def test_times(self):
@@ -141,6 +145,8 @@ class TestBag(unittest.TestCase):
         bag.remove(1)
         self.assertEquals(0, bag.times(1))
 
+        print "passed!"
+
 
     def test_contains_elem(self):
         #Empty bag
@@ -201,6 +207,8 @@ class TestBag(unittest.TestCase):
         self.assertFalse(bag.contains_elem("a"))
         self.assertFalse(bag.contains_elem("b"))
         self.assertFalse(bag.contains_elem(1))
+
+        print "passed!"
 
 
     def test_contains_bag(self):
@@ -270,6 +278,8 @@ class TestBag(unittest.TestCase):
         self.assertFalse(c.contains_bag(d))
         self.assertFalse(d.contains_bag(c))
 
+        print "passed!"
+
 
     def test_contained_in_bag(self):
         a = Bag()
@@ -338,7 +348,7 @@ class TestBag(unittest.TestCase):
         self.assertFalse(c.contained_in_bag(d))
         self.assertFalse(d.contained_in_bag(c))
 
-
+        print "passed!"
 
     def test_len(self):
         a = Bag()
@@ -385,6 +395,8 @@ class TestBag(unittest.TestCase):
         #Removing all elements
         a.remove(1)
         self.assertEquals(0, len(a))
+
+        print "passed!"
 
 
     def test_eq(self):
@@ -466,5 +478,107 @@ class TestBag(unittest.TestCase):
         b.add("a")
         b.add("b")
         self.assertNotEquals(a, b)
+
+    def test_iter(self):
+        #Empty bag
+        a = Bag()
+        items = 0
+        for elem in a:
+            items += 1
+        self.assertEquals(items, 0)
+
+        #One element (a)
+        a = Bag("a")
+        items = 0
+        for elem in a:
+            items += 1
+        self.assertEquals(items, 1)
+
+        #Many elements (aaa)
+        a = Bag("a", "a", "a")
+        items = 0
+        for elem in a:
+            self.assertEquals(elem, "a")
+            items += 1
+        self.assertEquals(items, 3)
+
+        # Different elements (aaab)
+        a = Bag("a", "a", "a", "b")
+        items = 0
+        items_a = 0
+        items_b = 0
+        for elem in a:
+            if elem == "a":
+                items_a += 1
+            elif elem == "b":
+                items_b += 1
+            items += 1
+        self.assertEquals(items, 4)
+        self.assertEquals(items_a, 3)
+        self.assertEquals(items_b, 1)
+
+        # Different repeated elements (aaabbb)
+        a = Bag("a", "a", "a", "b", "b", "b")
+        items = 0
+        items_a = 0
+        items_b = 0
+        for elem in a:
+            if elem == "a":
+                items_a += 1
+            elif elem == "b":
+                items_b += 1
+            items += 1
+        self.assertEquals(items, 6)
+        self.assertEquals(items_a, 3)
+        self.assertEquals(items_b, 3)
+
+
+        #After removing repetitions of one element (aaab)
+        a.remove("b")
+        a.remove("b")
+        items = 0
+        items_a = 0
+        items_b = 0
+        for elem in a:
+            if elem == "a":
+                items_a += 1
+            elif elem == "b":
+                items_b += 1
+            items += 1
+        self.assertEquals(items, 4)
+        self.assertEquals(items_a, 3)
+        self.assertEquals(items_b, 1)
+
+        #After removing completely an element (aaa)
+        a.remove("b")
+        items = 0
+        items_a = 0
+        items_b = 0
+        for elem in a:
+            if elem == "a":
+                items_a += 1
+            elif elem == "b":
+                items_b += 1
+            items += 1
+        self.assertEquals(items, 3)
+        self.assertEquals(items_a, 3)
+        self.assertEquals(items_b, 0)
+
+        #After removing everything
+        a.remove("a")
+        a.remove("a")
+        a.remove("a")
+        items = 0
+        items_a = 0
+        items_b = 0
+        for elem in a:
+            if elem == "a":
+                items_a += 1
+            elif elem == "b":
+                items_b += 1
+            items += 1
+        self.assertEquals(items, 0)
+        self.assertEquals(items_a, 0)
+        self.assertEquals(items_b, 0)
 
 

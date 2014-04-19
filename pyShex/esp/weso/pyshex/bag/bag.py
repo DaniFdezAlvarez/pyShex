@@ -4,6 +4,7 @@ from esp.weso.pyshex.bag.no_such_object_exception import NoSuchObjectException
 __author__ = 'Dani'
 
 from .bag_entry import BagEntry
+import copy
 
 
 # noinspection PyBroadException
@@ -48,6 +49,15 @@ class Bag(object):
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+    def __iter__(self):
+        for key in self._elements:
+            entry = self._elements[key]
+            for i in range(0, entry.count):
+                yield copy.deepcopy(entry.content)  # Not sure if we need to do this... but it looks like yes:
+                #We are not storing original objects, but incrementing a counter. So it wouldn't be logic
+                #returning always tha same object when count > 1 when it could not be the original one.
+                #It is better to never return originals, always copies...
 
 
     def add(self, elem):

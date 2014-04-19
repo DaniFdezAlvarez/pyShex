@@ -1,5 +1,5 @@
 from esp.weso.pyshex.bag.bag import Bag
-from esp.weso.pyshex.rdf_graph.rdf_relation import RdfRelation
+from esp.weso.pyshex.rdf_graph.rdf_edge_node import RdfEdgeNode
 
 __author__ = 'Dani'
 
@@ -11,8 +11,21 @@ class RdfNode(object):
         self._relations = Bag()
         pass
 
+    def __str__(self):
+        return "node: " + self.uri
+
+    def __eq__(self, other):
+        if type(self) != type(other):
+            return False
+        elif self.uri != other.uri:
+            return False
+        return True
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def add_relation(self, edge, node):
-        self._relations.add(RdfRelation(edge, node))
+        self._relations.add(RdfEdgeNode(edge, node))
 
     def out(self):
         """
@@ -20,7 +33,7 @@ class RdfNode(object):
 
         """
         result = set()
-        for relation in self._relations:  # TODO: no! bag is not iterable
+        for relation in self._relations:
             set.add(relation.node)
         return result
 
@@ -31,7 +44,7 @@ class RdfNode(object):
         (classes rdf_relation)
         """
         result = set()
-        for relation in self._relations:  # TODO: no! bag is not iterable
+        for relation in self._relations:
             result.add(relation)
         return result
 

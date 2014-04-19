@@ -43,6 +43,10 @@ def approach_to_sets():
     a.add("a")
     print len(a)
     a.add("a")
+    a.add("b")
+    print len(a)
+    element = a.pop()
+    print element
     print len(a)
 
 
