@@ -1,3 +1,5 @@
+from esp.weso.pyshex.shlabel_type import ShLabelType
+
 __author__ = 'Dani'
 from .shrule import ShRule
 
@@ -27,6 +29,15 @@ class UnaryRule(ShRule):
 
     def __hash__(self):
         return hash(self._sh_label) ^ hash(self._sh_type)
+
+    def get_possible_label_types(self):
+        result = set()
+        if self._is_entering or self._is_negation:
+            return result
+        result.add(ShLabelType(self._sh_label, self._sh_type))
+        return result
+
+
 
 
 

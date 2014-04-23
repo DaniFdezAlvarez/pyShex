@@ -12,7 +12,7 @@ class ShRule(object):
          - is_entering is a boolean that indicates if we are talking of a rule that comes to the type/node.
         Example: if the rule is "a::person" and is_entering is true, that means..... a person should be pointing
         the node with "a" ???
-         - is_negation is a boolean that means that must not occur t validate the expression
+         - is_negation is a boolean that means that must not occur to validate the expression
 
         The default values are for the most common case: multiplicity 1, not negated and not entering
 
@@ -23,6 +23,14 @@ class ShRule(object):
         self._max_occurs = max_occurs
         self._is_entering = is_entering
         self._is_negation = is_negation
+
+    def get_possible_label_types(self):
+        """
+        It should return a set of ShLabelType that indicates which types we can reach with which edges
+        according to this rule
+
+        """
+        pass
 
 
 

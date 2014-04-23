@@ -33,6 +33,14 @@ class AndRule(ShRule):
             result ^= hash(rule)  # XOR_EQUAL SIGN... pretty freak =)
         return result
 
+    def get_possible_label_types(self):
+        result = set()
+        if self._is_negation or self._is_entering:
+            return result
+        for rule in self._rules:
+            result = result.union(rule.get_possible_label_types())
+        return result
+
 
 
 

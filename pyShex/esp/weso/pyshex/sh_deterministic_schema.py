@@ -19,3 +19,19 @@ class ShDetSchema(ShSchema):
         #TODO: redefine this method. insert only if exp is deterministic.
         #TODO: if not, raise exception
         pass
+
+    def get_possible_label_types(self):
+        #TODO: REVISE ALL THIS
+        result = set()
+        for rule in self._rules:
+            result = result.union(rule)
+
+    def resulting_type_from_a_given_type_and_edge(self, shtype, shlabel):
+        """
+        sigma function of two parameters in Iovka et al's algorithm
+
+        """
+        units_of_type =
+
+        #TODO:
+        return "Aa"
