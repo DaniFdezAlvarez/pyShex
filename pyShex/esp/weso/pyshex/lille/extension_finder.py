@@ -1,5 +1,6 @@
+from esp.weso.pyshex.bag.bag import Bag
 from esp.weso.pyshex.lille.invalid_pretyping_exception import InvalidPretypingException
-from esp.weso.pyshex.shtype import ShType
+from esp.weso.pyshex.shape_expressions.shtype import ShType
 from esp.weso.pyshex.typyng.node_type_unit import NodeTypeUnit
 
 __author__ = 'Dani'
@@ -8,11 +9,12 @@ __author__ = 'Dani'
 class ExtensionFinder(object):
 
     def __init__(self):
-        self.schemma = None
+        self.deterministic_schema = None
         self.graph = None
         self.pre_typing = None
+        self._reduced_schema = None
 
-    def run(self, schemma, graph, pre_typing):
+    def run(self, deterministic_schema, graph, pre_typing):
         """
         It Rreturns the minimal extension or throws an exception if the pretyping was wrong
         schemma: ShSchemma object
@@ -21,7 +23,8 @@ class ExtensionFinder(object):
 
         """
 
-        self.schemma = schemma
+        self.deterministic_schema = deterministic_schema
+        self._reduced_schema = deterministic_schema.get_reduced_schema()
         self.graph = graph
         self.pre_typing = pre_typing
 
@@ -51,17 +54,16 @@ class ExtensionFinder(object):
         return NodeTypeUnit(node, shtype) in set_of_pairs
 
     def _is_valid_asignation(self, a_asignation):
-        #TODO: implement this this
+        #TODO: continue here
+
         return True
 
-    @staticmethod
-    def resulting_type_from_a_given_type_and_edge(type, label):
-        """
-        sigma function of two parameters in Iovka et al's algorithm
+    def resulting_type_from_a_given_type_and_edge(self, shtype, label):
+        reduced_shex = self._reduced_schema.get_reduced_shex_of_a_type(shtype)
 
-        """
-
-        #TODO:
-        return "Aa"
+        for unit_label_type in reduced_shex:
+            if unit_label_type.label == label:
+                return unit_label_type.shtype
+        return None
 
 

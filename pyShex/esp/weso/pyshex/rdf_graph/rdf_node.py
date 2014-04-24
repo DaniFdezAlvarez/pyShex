@@ -32,9 +32,9 @@ class RdfNode(object):
         It returns a set with every node reachable from "self" using a single edge
 
         """
-        result = set()
+        result = Bag()
         for relation in self._relations:
-            set.add(relation.node)
+            result.add(relation.node)
         return result
 
     def out_lab(self):
@@ -43,7 +43,7 @@ class RdfNode(object):
         reachable from "self" using a single arist, with this arist
         (classes rdf_relation)
         """
-        result = set()
+        result = Bag()
         for relation in self._relations:
             result.add(relation)
         return result

@@ -1,7 +1,7 @@
-from esp.weso.pyshex.shlabel_type import ShLabelType
+from esp.weso.pyshex.shape_expressions.reduced_shex.shlabel_type import ShLabelType
 
 __author__ = 'Dani'
-from .shrule import ShRule
+from .esp.weso.pyshex.shape_expressions.shrule import ShRule
 
 
 class UnaryRule(ShRule):

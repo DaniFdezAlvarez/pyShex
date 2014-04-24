@@ -1,6 +1,6 @@
 __author__ = 'Dani'
 
-from .and_rule import AndRule
+from .esp.weso.pyshex.shape_expressions.and_rule import AndRule
 
 
 class BagExpression(object):

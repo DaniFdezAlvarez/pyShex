@@ -1,7 +1,5 @@
 __author__ = 'Dani'
 
-from .and_rule import AndRule
-
 
 class ShType(object):
     def __init__(self, name):
